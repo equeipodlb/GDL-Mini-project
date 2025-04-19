@@ -138,9 +138,9 @@ def bo_OrthRegGCN(dataset_name='Cora'):
             print(f"Best for {nl} layers, {act_name}: gamma = {best_gamma:.3f}, orth_reg_weight = {best_orth_reg_weight:.5f}, Test Accuracy = {best_acc:.4f}")
 
     
-    with open("./results/bo_results_orth.pkl", "wb") as f:
+    with open("./results/bo_best_params_orth.pkl", "wb") as f:
         pickle.dump(best_params, f)
-    print("Best results saved to bo_results_orth.pkl.")
+    print("Best results saved to bo_best_params_orth.pkl.")
 
     return best_params
 
