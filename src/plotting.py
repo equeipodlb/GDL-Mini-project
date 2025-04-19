@@ -1,5 +1,6 @@
 from src.config import layer_configs,activations,training_params
 import matplotlib.pyplot as plt
+import numpy as np
 
 plt.style.use('https://github.com/filangel/mplstyles/raw/main/matlab.mplstyle')
 plt.rcParams['figure.dpi'] = 150
@@ -129,7 +130,7 @@ def plot_ablation_activation(activation,orthogonal_gamma1_mu0,
         "No scaling, no penalty (γ=1, μ=0)": orthogonal_gamma1_mu0,
         "Scaling, no penalty (BO γ, μ=0)": orthogonal_BO_gamma_mu0,
         "No scaling, penalty (γ=1, BO μ)": orthogonal_gamma1_BO_mu,
-        "OrthRegGCN (BO for γ,μ)": BO_gamma_BO_mu
+        "OrthRegGCN (BO for γ,μ)": orthogonal_BO_gamma_BO_mu
     }
 
     plt.figure(figsize=(8, 6))
@@ -155,6 +156,8 @@ def plot_ablation_activation(activation,orthogonal_gamma1_mu0,
     plt.title(f"Results for Activation: {activation_name}")
     plt.legend()
     plt.grid(True)
+    plt.savefig(f'figures/ablation_{activation_name}')
+    plt.ylim(top=0.85,bottom=0.1)  # Set the smallest value on the y-axis to 0.1
     plt.show()
 
 
@@ -167,7 +170,7 @@ def plot_ablation_all_activations(orthogonal_gamma1_mu0,
     """
     activations = ["function", "Tanh", "ReLU", "Identity"]
     for act in activations:
-        plot_activation(act,orthogonal_gamma1_mu0,
+        plot_ablation_activation(act,orthogonal_gamma1_mu0,
                                  orthogonal_BO_gamma_mu0,
                                  orthogonal_gamma1_BO_mu,
                                  orthogonal_BO_gamma_BO_mu)

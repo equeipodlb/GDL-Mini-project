@@ -148,11 +148,13 @@ orthogonal_BO_gamma_BO_mu = {
     4: {'Identity': (0.8068, 0.0055),
      'ReLU': (0.7532, 0.043),
      'Tanh': (0.8046, 0.003),
-     'function': (0.8038, 0.0051)},
+     'function': (0.8038, 0.0051)
+     },
  10: {'Identity': (0.8046, 0.0048),
       'ReLU': (0.787, 0.0076),
       'Tanh': (0.7964, 0.0067),
-      'function': (0.8054, 0.0046)},
+      'function': (0.8054, 0.0046)
+      },
  20: {'Identity': (0.7896, 0.003),
       'ReLU': (0.4576, 0.2698),
       'Tanh': (0.7834, 0.0146),
@@ -172,7 +174,9 @@ orthogonal_BO_gamma_BO_mu = {
  60: {'Identity': (0.7456, 0.0247),
       'ReLU': (0.1754, 0.0805),
       'Tanh': (0.7796, 0.0151),
-      'function': (0.7918, 0.0088)}
+      'function': (0.7918, 0.0088)
+    }
+    
 }
 
 
@@ -224,8 +228,8 @@ def main():
     with open("./results/ablation3_results_Cora.pkl","rb") as f:
         orthogonal_gamma1_BO_mu = pickle.load(f)
 
-    with open("./results/orth_reg_results_Cora.pkl") as f:
-        orthogonal_BO_gamma_BO_mu = pickle.load(f)
+    #with open("./results/orth_reg_results_Cora.pkl") as f:
+     #   orthogonal_BO_gamma_BO_mu = pickle.load(f)
 
     plot_ablation_all_activations(orthogonal_gamma1_mu0,
                                  orthogonal_BO_gamma_mu0,
