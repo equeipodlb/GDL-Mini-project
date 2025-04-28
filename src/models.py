@@ -38,6 +38,8 @@ class GCN(nn.Module):
         else:
             return logits
 
+"""## GCN with Gaussian Init [RUN]"""
+
 # Define a simple deep GCN model using the erf activation function.
 class InitGCN(nn.Module):
     def __init__(self, in_channels, hidden_channels, out_channels, num_layers, sigma, activation):
@@ -60,7 +62,7 @@ class InitGCN(nn.Module):
         self.convs.append(nn.Linear(hidden_channels, out_channels))
         self.sigma = sigma
         self.activation = activation
-        self.hidden_dim = hidden_channels
+        self.hidden_channels = hidden_channels
         self.reset_parameters()
 
     def reset_parameters(self):
@@ -71,7 +73,7 @@ class InitGCN(nn.Module):
         for conv in self.convs[1:-1]:
             conv.reset_parameters()
             if hasattr(conv, 'lin'):
-                nn.init.normal_(conv.lin.weight, mean=0, std=self.sigma / math.sqrt(self.hidden_dim))
+                nn.init.normal_(conv.lin.weight, mean=0, std=self.sigma/math.sqrt(self.hidden_channels))
                 if conv.lin.bias is not None:
                     nn.init.zeros_(conv.lin.bias)
 
@@ -94,6 +96,8 @@ class InitGCN(nn.Module):
             return logits, latent
         else:
             return logits
+
+"""## MODEL: ORTHREGGCN [RUN]"""
 
 class OrthRegGCN(nn.Module):
     def __init__(self, in_channels, hidden_channels, out_channels, num_layers, activation=erf_activation, gamma=1.0,mu=1e-4):
@@ -127,8 +131,7 @@ class OrthRegGCN(nn.Module):
         for conv in self.convs[1:-1]:
             conv.reset_parameters()
             if hasattr(conv, 'lin'):
-                nn.init.orthogonal_(conv.lin.weight)
-                conv.lin.weight.data.mul(self.gamma)
+                nn.init.orthogonal_(conv.lin.weight,gain=self.gamma)
                 if conv.lin.bias is not None:
                     nn.init.zeros_(conv.lin.bias)
         #for bn in self.bns:

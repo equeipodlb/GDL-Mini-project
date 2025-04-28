@@ -47,7 +47,8 @@ from src.bayesian_opt import bo_OrthRegGCN
 }"""
 
 def main():
-    best_params = bo_OrthRegGCN()
+    dataset_name = 'Cora'
+    best_params = BO_orth_reg(dataset_name)
     print_best_gammas_mus(best_params)
     plot_gammas(best_params)
 

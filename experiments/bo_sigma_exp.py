@@ -2,7 +2,7 @@ import pickle
 from src.config import layer_configs,activations
 
 from src.plotting import plot_sigmas_distr
-from src.bayesian_opt import bo_sigmas
+from src.bayesian_opt import bo_sigmas,run_BO_sigma
 
 """
 
@@ -55,13 +55,13 @@ best_params = {
 """
 
 def main():
-
-    #best_params = bo_sigmas()
+    dataset_name = 'Cora'
+    best_params = run_BO_sigma(dataset_name)
     
-    with open("./results/bo_sigma_results.pkl","rb") as f:
+    with open(f"./results/bo_sigma_results_{dataset_name}.pkl","rb") as f:
         best_params = pickle.load(f)
-    best_sigmas = {nl: {act: info['sigma'] for act, info in best_params[nl].items()} for nl in best_params}
-    best_accs = {nl: {act: info['test_accuracy'] for act, info in best_params[nl].items()} for nl in best_params}
+    best_sigmas = best_params['best_sigmas']
+    best_accs = best_params['best_accs']
     
     print(best_params)
     plot_sigmas_distr(best_sigmas,best_accs,activations=activations,layer_configs=layer_configs)
